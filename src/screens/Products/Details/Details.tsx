@@ -10,7 +10,7 @@ interface Props {
     navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
 
-class HomeScreen extends Component<Props> {
+class DetailsScreen extends Component<Props> {
     public static navigationOptions = {
         title: 'Test Screen',
     };
@@ -19,16 +19,10 @@ class HomeScreen extends Component<Props> {
         const { navigation } = this.props;
         return (
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                <Text>Home Screen</Text>
-                <Button
-                    title="Go to details"
-                    onPress={() => {
-                        navigation.navigate('Details');
-                    }}
-                />
+                <Text>Details Screen</Text>               
             </View>
         );
     }
 }
 
-export default HomeScreen;
+export default DetailsScreen;
