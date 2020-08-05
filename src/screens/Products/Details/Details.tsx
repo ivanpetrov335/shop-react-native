@@ -1,25 +1,64 @@
 import React, { Component } from 'react';
-import { Button, Text, View } from 'react-native';
-import {
-    NavigationParams,
-    NavigationScreenProp,
-    NavigationState,
-} from 'react-navigation';
+import { Button, Text, View, Image } from 'react-native';
+import { Product } from '../reducer';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RouteProp } from '@react-navigation/native';
+import { Appbar } from 'react-native-paper';
+import { Input } from 'react-native-elements';
 
-interface Props {
-    navigation: NavigationScreenProp<NavigationState, NavigationParams>;
-}
+
+type RootStackParamList = {
+    Prams: { product: Product }
+};
+
+type ProfileScreenRouteProp = RouteProp<RootStackParamList, 'Prams'>;
+
+type ProfileScreenNavigationProp = StackNavigationProp<
+    RootStackParamList,
+    'Prams'
+>;
+
+type Props = {
+    route: ProfileScreenRouteProp;
+    navigation: ProfileScreenNavigationProp;
+};
+
 
 class DetailsScreen extends Component<Props> {
     public static navigationOptions = {
         title: 'Test Screen',
     };
 
+
     render() {
-        const { navigation } = this.props;
+        var product = this.props.route.params.product;
         return (
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                <Text>Details Screen</Text>               
+            <View >
+                <Input
+                    label='Title'
+                    disabled={true}
+                    value={product.Title}
+                />
+
+                <Input
+                    label='Price'
+                    disabled={true}
+                    value={product.Price}
+                />
+                <Input
+                    label='Description'
+                    disabled={true}
+                    value={product.Description}
+                />
+                <Input
+                    label='Umage URI'
+                    disabled={true}
+                    value={product.ImageUri}
+                />
+                <Image
+                    source={{ uri: product.ImageUri }}
+                    style={{ width: 200, height: 200 }}
+                />
             </View>
         );
     }

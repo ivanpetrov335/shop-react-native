@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, ScrollView, TouchableOpacity, StyleSheet, View, Dimensions, Platform, Image } from 'react-native';
 import {
     NavigationParams,
     NavigationScreenProp,
@@ -9,9 +9,9 @@ import { connect } from 'react-redux';
 import { Product } from '../reducer';
 import { AppState } from 'src/screens/reducer';
 import { getProducts } from './actions';
-import { Button, Card, ListItem, Icon } from 'react-native-elements';
-import { Header } from '@react-navigation/stack';
+import { Card } from 'react-native-elements';
 
+import { Appbar } from 'react-native-paper';
 interface Props {
     navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
@@ -24,8 +24,9 @@ interface OwnState {
 }
 
 class ProductList extends React.Component<Props & DispatchProps & OwnState> {
-    public static navigationOptions = {
+    static navigationOptions = {
         title: 'Test Screen',
+        header: null
     };
 
     componentDidMount() {
@@ -35,22 +36,23 @@ class ProductList extends React.Component<Props & DispatchProps & OwnState> {
     render() {
         const { navigation } = this.props;
         return (
-            <View >
-
-                {this.props.products ?
-                    this.props.products.map(_ =>
-                        <TouchableOpacity onPress={() => navigation.navigate("Details")}>
-                            <Card
-                                title={_.Title}
-                                image={{ uri: _.ImageUri }}
-                            >
-                                <Text style={{ marginBottom: 10 }}> {_.Description} </Text>
-                            </Card>
-                        </TouchableOpacity>
-                    )
-                    : null
-                }
-            </View>
+            <>
+                <ScrollView  >
+                    {this.props.products ?
+                        this.props.products.map(product =>
+                            <TouchableOpacity onPress={() => navigation.navigate("Details", { product })}>
+                                <Card
+                                    key={product.Id}
+                                    title={product.Title}
+                                    image={{ uri: product.ImageUri }}
+                                >
+                                </Card>
+                            </TouchableOpacity>
+                        )
+                        : null
+                    }
+                </ScrollView >
+            </>
         );
     }
 }
